@@ -11,8 +11,6 @@
 
 namespace CalendArt\Adapter;
 
-use CalendArt\AbstractCalendar;
-
 /**
  * Handle the dialog with an Adapter
  *
@@ -33,5 +31,19 @@ interface AdapterInterface
      * @return EventApiInterface
      */
     public function getEventApi();
+
+    /**
+     * Get the Task API to use for this adapter
+     *
+     * @return TaskApiInterface
+     */
+    public function getTaskApi();
+
+    /**
+     * Get the Task Group API to use for this adapter
+     *
+     * @return TaskGroupApiInterface
+     */
+    public function getTaskGroupApi();
 }
 

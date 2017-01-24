@@ -1,5 +1,5 @@
 {
-    "name": "calendart/calendart",
+    "name": "carterzenk/calendart",
     "type": "library",
     "description": "Manage remote calendars through an unified api",
     "keywords": ["Calendar", "Events", "Scheduler", "Schedule", "Agenda"],
@@ -11,6 +11,10 @@
             "email": "baptiste@wisembly.com",
             "homepage": "http://baptiste.xn--clavi-fsa.net/",
             "role": "Project Lead"
+        },
+        {
+            "name": "Carter Zenk",
+            "email": "carterzenk@gmail.com"
         }
     ],
 
