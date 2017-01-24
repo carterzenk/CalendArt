@@ -33,6 +33,13 @@ interface AdapterInterface
     public function getEventApi();
 
     /**
+     * Get the Mail API to use for this adapter
+     *
+     * @return MailApiInterface
+     */
+    public function getMailApi();
+
+    /**
      * Get the Task API to use for this adapter
      *
      * @return TaskApiInterface
