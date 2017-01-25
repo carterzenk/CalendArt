@@ -25,6 +25,11 @@ abstract class AbstractMessage
     protected $textBody;
 
     /**
+     * @var string
+     */
+    protected $sender;
+
+    /**
      * @var \DateTime
      */
     protected $sentDate;
@@ -35,17 +40,17 @@ abstract class AbstractMessage
     protected $recipients;
 
     /**
-     * @var string
-     */
-    protected $from;
-
-    /**
      * AbstractMessage constructor.
      */
     public function __construct()
     {
         $this->recipients = [];
     }
+
+    /**
+     * @return mixed
+     */
+    public abstract function getId();
 
     /**
      * @return string
@@ -144,18 +149,18 @@ abstract class AbstractMessage
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getFrom()
+    public function getSender()
     {
-        return $this->from;
+        return $this->sender;
     }
 
     /**
-     * @param mixed $from
+     * @param string $sender
      */
-    public function setFrom($from)
+    public function setSender($sender)
     {
-        $this->from = $from;
+        $this->sender = $sender;
     }
 }
