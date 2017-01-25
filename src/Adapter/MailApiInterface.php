@@ -3,7 +3,7 @@
 namespace CalendArt\Adapter;
 
 use CalendArt\AbstractMessage;
-use Doctrine\Common\Collections\Collection;
+use CalendArt\MessageSet;
 
 interface MailApiInterface
 {
@@ -12,7 +12,7 @@ interface MailApiInterface
      *
      * @param string $search
      * @param mixed $pageToken
-     * @return Collection<AbstractMessage>
+     * @return MessageSet
      */
     public function getList($search, $pageToken = null);
 
