@@ -14,7 +14,7 @@ interface MailApiInterface
      * @param mixed $pageToken
      * @return MessageSet
      */
-    public function getList($search, $pageToken = null);
+    public function getList($search, $pageToken);
 
     /**
      * Returns the specific information for a given task group

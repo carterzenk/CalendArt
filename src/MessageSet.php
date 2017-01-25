@@ -19,21 +19,13 @@ class MessageSet
 
     /**
      * MessageSet constructor.
+     * @param $nextPageToken
      */
-    public function __construct()
+    public function __construct($nextPageToken)
     {
+        $this->nextPageToken = $nextPageToken;
+
         $this->messages = new ArrayCollection();
-    }
-
-    /**
-     * @param $token
-     * @return $this
-     */
-    public function setNextPageToken($token)
-    {
-        $this->nextPageToken = $token;
-
-        return $this;
     }
 
     /**
@@ -50,11 +42,9 @@ class MessageSet
      */
     public function addMessage(AbstractMessage $message)
     {
-        if ($this->messages->contains($message)) {
-            return $this;
+        if (!$this->messages->contains($message)) {
+            $this->messages->add($message);
         }
-
-        $this->messages->add($message);
 
         return $this;
     }

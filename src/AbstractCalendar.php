@@ -23,16 +23,24 @@ use Doctrine\Common\Collections\Collection,
  */
 abstract class AbstractCalendar
 {
-    /** @var string Calendar's name */
+    /**
+     * @var string Calendar's name
+     */
     protected $name;
 
-    /** @var string Calendar's description */
+    /**
+     * @var string Calendar's description
+     */
     protected $description = '';
 
-    /** @var Collection<AbstractEvent> Collection of events */
+    /**
+     * @var Collection<AbstractEvent> Collection of events
+     */
     protected $events;
 
-    /** @var Collection<UserPermission> Collection of permissions accorded to this calendar */
+    /**
+     * @var Collection<UserPermission> Collection of permissions accorded to this calendar
+     */
     protected $permissions;
 
     public function __construct($name)
@@ -43,16 +51,23 @@ abstract class AbstractCalendar
         $this->permissions = new ArrayCollection;
     }
 
-    /** @return mixed */
+    /**
+     * @return mixed
+     */
     abstract public function getId();
 
-    /** @return string */
+    /**
+     * @return string
+     */
     public function getName()
     {
         return $this->name;
     }
 
-    /** @return $this */
+    /**
+     * @param $name
+     * @return $this
+     */
     public function setName($name)
     {
         $this->name = $name;
@@ -60,13 +75,18 @@ abstract class AbstractCalendar
         return $this;
     }
 
-    /** @return string */
+    /**
+     * @return string
+     */
     public function getDescription()
     {
         return $this->description;
     }
 
-    /** @return $this */
+    /**
+     * @param string $description
+     * @return $this
+     */
     public function setDescription($description)
     {
         $this->description = $description;
@@ -74,13 +94,18 @@ abstract class AbstractCalendar
         return $this;
     }
 
-    /** @return Collection<AbstractEvent> */
+    /**
+     * @return Collection<AbstractEvent>
+     */
     public function getEvents()
     {
         return $this->events;
     }
 
-    /** @return $this */
+    /**
+     * @param AbstractEvent $event
+     * @return $this
+     */
     public function addEvent(AbstractEvent $event)
     {
         if ($this->events->contains($event)) {
@@ -92,7 +117,10 @@ abstract class AbstractCalendar
         return $this;
     }
 
-    /** @return $this */
+    /**
+     * @param AbstractEvent $event
+     * @return $this
+     */
     public function detachEvent(AbstractEvent $event)
     {
         $this->events->removeElement($event);
@@ -100,25 +128,31 @@ abstract class AbstractCalendar
         return $this;
     }
 
-    /** @return Collection<UserPermission> */
+    /**
+     * @return Collection<UserPermission>
+     */
     public function getPermissions()
     {
         return $this->permissions;
     }
 
-    /** @return $this */
+    /**
+     * @param UserPermission $permission
+     * @return $this
+     */
     public function addPermission(UserPermission $permission)
     {
-        if ($this->permissions->contains($permission)) {
-            return;
+        if (!$this->permissions->contains($permission)) {
+            $this->permissions->add($permission);
         }
-
-        $this->permissions->add($permission);
 
         return $this;
     }
 
-    /** @return $this */
+    /**
+     * @param $permission
+     * @return $this
+     */
     public function removePermission($permission)
     {
         $this->permissions->removeElement($permission);
@@ -126,7 +160,10 @@ abstract class AbstractCalendar
         return $this;
     }
 
-    /** @return $this */
+    /**
+     * @param Collection $collection
+     * @return $this
+     */
     public function setPermissions(Collection $collection)
     {
         $this->permissions = $collection;

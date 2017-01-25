@@ -24,15 +24,26 @@ use Doctrine\Common\Collections\Collection,
  */
 class User
 {
-    /** @var string User's name */
+    /**
+     * @var string User's name
+     */
     protected $name;
 
-    /** @var string User's email */
+    /**
+     * @var string User's email
+     */
     protected $email;
 
-    /** @var Collection<AbstractEvent> Collection of events the user is involved in */
+    /**
+     * @var Collection<AbstractEvent> Collection of events the user is involved in
+     */
     protected $events;
 
+    /**
+     * User constructor.
+     * @param $name
+     * @param $email
+     */
     public function __construct($name, $email)
     {
         $this->name  = $name;
@@ -41,37 +52,47 @@ class User
         $this->events = new ArrayCollection;
     }
 
-    /** @return string */
+    /**
+     * @return string
+     */
     public function getName()
     {
         return $this->name;
     }
 
-    /** @return string */
+    /**
+     * @return string
+     */
     public function getEmail()
     {
         return $this->email;
     }
 
-    /** @return Collection<AbstractEvent> */
+    /**
+     * @return Collection<AbstractEvent>
+     */
     public function getEvents()
     {
         return $this->events;
     }
 
-    /** @return $this */
+    /**
+     * @param AbstractEvent $event
+     * @return $this
+     */
     public function addEvent(AbstractEvent $event)
     {
-        if ($this->events->contains($event)) {
-            return $this;
+        if (!$this->events->contains($event)) {
+            $this->events->add($event);
         }
-
-        $this->events->add($event);
 
         return $this;
     }
 
-    /** @return $this */
+    /**
+     * @param AbstractEvent $event
+     * @return $this
+     */
     public function removeEvent(AbstractEvent $event)
     {
         $this->events->removeElement($event);
