@@ -2,6 +2,9 @@
 
 namespace CalendArt;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+
 abstract class AbstractMessage
 {
     /**
@@ -25,17 +28,17 @@ abstract class AbstractMessage
     protected $textBody;
 
     /**
-     * @var string
-     */
-    protected $sender;
-
-    /**
      * @var \DateTime
      */
     protected $sentDate;
 
     /**
-     * @var array
+     * @var User
+     */
+    protected $sender;
+
+    /**
+     * @var Collection
      */
     protected $recipients;
 
@@ -44,7 +47,7 @@ abstract class AbstractMessage
      */
     public function __construct()
     {
-        $this->recipients = [];
+        $this->recipients = new ArrayCollection();
     }
 
     /**
@@ -77,27 +80,11 @@ abstract class AbstractMessage
     }
 
     /**
-     * @param string $preview
-     */
-    public function setPreview($preview)
-    {
-        $this->preview = $preview;
-    }
-
-    /**
      * @return string
      */
     public function getHtmlBody()
     {
         return $this->htmlBody;
-    }
-
-    /**
-     * @param string $htmlBody
-     */
-    public function setHtmlBody($htmlBody)
-    {
-        $this->htmlBody = $htmlBody;
     }
 
     /**
@@ -109,15 +96,7 @@ abstract class AbstractMessage
     }
 
     /**
-     * @param string $textBody
-     */
-    public function setTextBody($textBody)
-    {
-        $this->textBody = $textBody;
-    }
-
-    /**
-     * @return mixed
+     * @return \DateTime|null
      */
     public function getSentDate()
     {
@@ -125,15 +104,7 @@ abstract class AbstractMessage
     }
 
     /**
-     * @param mixed $sentDate
-     */
-    public function setSentDate(\DateTime $sentDate)
-    {
-        $this->sentDate = $sentDate;
-    }
-
-    /**
-     * @return mixed
+     * @return Collection
      */
     public function getRecipients()
     {
@@ -141,26 +112,23 @@ abstract class AbstractMessage
     }
 
     /**
-     * @param string $recipient
+     * @param User $recipient
+     * @return $this
      */
-    public function addRecipient($recipient)
+    protected function addRecipient(User $recipient)
     {
-        $this->recipients[] = $recipient;
+        if (!$this->recipients->contains($recipient)) {
+            $this->recipients->add($recipient);
+        }
+
+        return $this;
     }
 
     /**
-     * @return string
+     * @return User
      */
     public function getSender()
     {
         return $this->sender;
-    }
-
-    /**
-     * @param string $sender
-     */
-    public function setSender($sender)
-    {
-        $this->sender = $sender;
     }
 }
