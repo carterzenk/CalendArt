@@ -11,7 +11,7 @@
 
 namespace CalendArt;
 
-use Datetime,
+use DateTime,
     InvalidArgumentException;
 
 use Doctrine\Common\Collections\Collection,
@@ -47,7 +47,7 @@ abstract class AbstractEvent
     /** @var Collection<EventParticipation> Participations registered to this event */
     protected $participations;
 
-    public function __construct(AbstractCalendar $calendar, User $owner, $name, Datetime $start, Datetime $end)
+    public function __construct(AbstractCalendar $calendar, User $owner, $name, DateTime $start, DateTime $end)
     {
         $this->name     = $name;
         $this->owner    = $owner;
@@ -75,7 +75,10 @@ abstract class AbstractEvent
         return $this->name;
     }
 
-    /** @return $this */
+    /**
+     * @param $name
+     * @return $this
+     */
     public function setName($name)
     {
         $this->name = $name;
@@ -89,7 +92,10 @@ abstract class AbstractEvent
         return $this->description;
     }
 
-    /** @return $this */
+    /**
+     * @param $description
+     * @return $this
+     */
     public function setDescription($description)
     {
         $this->description = $description;
@@ -103,16 +109,19 @@ abstract class AbstractEvent
         return $this->owner;
     }
 
-    /** @return Datetime */
+    /** @return DateTime */
     public function getStart()
     {
         return $this->start;
     }
 
-    /** @return $this */
-    public function setStart(Datetime $start)
+    /**
+     * @param DateTime $start
+     * @return $this
+     */
+    public function setStart(DateTime $start)
     {
-        if ($this->end < $start) {
+        if (isset($this->end) && $this->end < $start) {
             throw new InvalidArgumentException('An event cannot start after it was ended');
         }
 
@@ -121,16 +130,19 @@ abstract class AbstractEvent
         return $this;
     }
 
-    /** @return Datetime */
+    /** @return DateTime */
     public function getEnd()
     {
         return $this->end;
     }
 
-    /** @return $this */
-    public function setEnd(Datetime $end)
+    /**
+     * @param DateTime $end
+     * @return $this
+     */
+    public function setEnd(DateTime $end)
     {
-        if ($this->start > $end) {
+        if (isset($this->start) && $this->start > $end) {
             throw new InvalidArgumentException('An event cannot end before it was started');
         }
 
@@ -142,31 +154,34 @@ abstract class AbstractEvent
     /**
      * Checks if this event has already ended
      *
-     * @return Boolean
+     * @param DateTime $current
+     * @return bool
      */
-    public function hasEnded(Datetime $current = null)
+    public function hasEnded(DateTime $current = null)
     {
-        return $this->end < ($current ?: new Datetime);
+        return $this->end < ($current ?: new DateTime);
     }
 
     /**
      * Checks if this event has already started
      *
-     * @return Boolean
+     * @param DateTime $current
+     * @return bool
      */
-    public function hasStarted(Datetime $current = null)
+    public function hasStarted(DateTime $current = null)
     {
-        return $this->start <= ($current ?: new Datetime);
+        return $this->start <= ($current ?: new DateTime);
     }
 
     /**
      * Checks if this event is currently running
      *
-     * @return Boolean
+     * @param DateTime $current
+     * @return bool
      */
-    public function isRunning(Datetime $current = null)
+    public function isRunning(DateTime $current = null)
     {
-        $current = $current ?: new Datetime;
+        $current = $current ?: new DateTime;
 
         return $this->hasStarted($current) && !$this->hasEnded($current);
     }
@@ -196,7 +211,10 @@ abstract class AbstractEvent
         return $this->participations;
     }
 
-    /** @return $this */
+    /**
+     * @param EventParticipation $participation
+     * @return $this
+     */
     public function addParticipation(EventParticipation $participation)
     {
         $email = $participation->getUser()->getEmail();
@@ -214,7 +232,10 @@ abstract class AbstractEvent
         return $this;
     }
 
-    /** @return $this */
+    /**
+     * @param EventParticipation $participation
+     * @return $this
+     */
     public function removeParticipation(EventParticipation $participation)
     {
         $this->participations->removeElement($participation);
